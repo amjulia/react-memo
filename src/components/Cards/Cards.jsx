@@ -124,6 +124,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     });
 
     const playerLost = openCardsWithoutPair.length >= 2;
+    //проверка: Если жизней >0 еще попытки
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
     if (playerLost) {
