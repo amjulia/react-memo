@@ -1,31 +1,44 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
 import { Button } from "../../components/Button/Button";
+import { useContext, useState } from "react";
+import { DifficultyLevelContext } from "../../context/DifficultyLevel";
 
 export function SelectLevelPage() {
+  const [level, setLevel] = useState(null);
+  const navigate = useNavigate();
+  const { isEasy, setIsEasy } = useContext(DifficultyLevelContext);
+  const startGame = () => {
+    navigate(`/game/${level}`);
+  };
+  const handleInputChange = e => {
+    setLevel(e.target.value);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
         <h1 className={styles.title}>Выбери сложность</h1>
-        <ul className={styles.levels}>
-          <li className={styles.level}>
-            <Link className={styles.levelLink} to="/game/3">
-              1
-            </Link>
-          </li>
-          <li className={styles.level}>
-            <Link className={styles.levelLink} to="/game/6">
-              2
-            </Link>
-          </li>
-          <li className={styles.level}>
-            <Link className={styles.levelLink} to="/game/9">
-              3
-            </Link>
-          </li>
-        </ul>
+        <form className={styles.levels}>
+          <label className={styles.level}>
+            <input type="radio" value="3" checked={level === 3} onChange={handleInputChange} />
+            <div>1</div>
+          </label>
+          <label className={styles.level}>
+            <input type="radio" value="6" checked={level === 6} onChange={handleInputChange} />
+            <div>2</div>
+          </label>
+          <label className={styles.level}>
+            <input type="radio" value="9" checked={level === 9} onChange={handleInputChange} />
+            <div>3</div>
+          </label>
+        </form>
         <label className={styles.customCheckbox}>
-          <input type="checkbox" className={styles.hiddenCheckbox} />
+          <input
+            type="checkbox"
+            className={styles.hiddenCheckbox}
+            checked={isEasy}
+            onChange={() => setIsEasy(!isEasy)}
+          />
           <div className={styles.checkbox}>
             <svg
               className={styles.checkMark}
@@ -43,7 +56,7 @@ export function SelectLevelPage() {
           </div>
           Легкий режим (3 жизни)
         </label>
-        <Button>Играть</Button>
+        <Button onClick={startGame}>Играть</Button>
       </div>
     </div>
   );
