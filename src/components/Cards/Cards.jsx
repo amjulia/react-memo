@@ -79,6 +79,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
     setLifes(3);
+    setSeconds(previewSeconds);
   }
 
   /**
@@ -197,6 +198,16 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       clearInterval(intervalId);
     };
   }, [gameStartDate, gameEndDate]);
+  const [seconds, setSeconds] = useState(previewSeconds);
+  useEffect(() => {
+    // Установка таймера
+    const timer = setInterval(() => {
+      setSeconds(setSeconds => setSeconds - 1); // Обновление состояния каждую секунду
+    }, 1000);
+
+    // Функция очистки, которая будет вызвана при размонтировании компонента
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -205,7 +216,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           {status === STATUS_PREVIEW ? (
             <div>
               <p className={styles.previewText}>Запоминайте пары!</p>
-              <p className={styles.previewDescription}>Игра начнется через {previewSeconds} секунд</p>
+              <p className={styles.previewDescription}>Игра начнется через {seconds} секунд</p>
             </div>
           ) : (
             <>
@@ -224,7 +235,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
         {isEasy && <div className={styles.lifesCount}>Попыток: {lifes}</div>}
       </div>
-
       <div className={styles.cards}>
         {cards.map(card => (
           <Card
