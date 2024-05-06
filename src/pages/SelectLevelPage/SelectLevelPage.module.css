@@ -53,15 +53,10 @@
   color: #0080C1;
   cursor: pointer;
 }
-
-
 input[type="radio"] {
   display: none;
 }
-input[type="radio"]:checked + div{
-  background: #0080c1;
-  color: #fff;
-} 
+
 .level:active {
   background: #0080c1;
   color: #fff;

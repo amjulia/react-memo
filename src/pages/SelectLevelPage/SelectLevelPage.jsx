@@ -19,16 +19,16 @@ export function SelectLevelPage() {
       <div className={styles.modal}>
         <h1 className={styles.title}>Выбери сложность</h1>
         <form className={styles.levels}>
-          <label className={styles.level}>
-            <input type="radio" value="3" checked={level === 3} onChange={handleInputChange} />
+          <label className={styles.level} style={level === "3" ? { background: "#0080c1", color: "#fff" } : {}}>
+            <input type="radio" value="3" checked={level === "3"} onChange={handleInputChange} />
             <div>1</div>
           </label>
-          <label className={styles.level}>
-            <input type="radio" value="6" checked={level === 6} onChange={handleInputChange} />
+          <label className={styles.level} style={level === "6" ? { background: "#0080c1", color: "#fff" } : {}}>
+            <input type="radio" value="6" checked={level === "6"} onChange={handleInputChange} />
             <div>2</div>
           </label>
-          <label className={styles.level}>
-            <input type="radio" value="9" checked={level === 9} onChange={handleInputChange} />
+          <label className={styles.level} style={level === "9" ? { background: "#0080c1", color: "#fff" } : {}}>
+            <input type="radio" value="9" checked={level === "9"} onChange={handleInputChange} />
             <div>3</div>
           </label>
         </form>
