@@ -99,7 +99,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       if (card.id !== clickedCard.id) {
         return card;
       }
-
       return {
         ...card,
         open: true,
@@ -109,16 +108,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setCards(nextCards);
 
     const isPlayerWon = nextCards.every(card => card.open);
-
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
       finishGame(STATUS_WON);
       return;
     }
-
     // Открытые карты на игровом поле
     const openCards = nextCards.filter(card => card.open);
-
     // Ищем открытые карты, у которых нет пары среди других открытых
     const openCardsWithoutPair = openCards.filter(card => {
       const sameCards = openCards.filter(openCard => card.suit === openCard.suit && card.rank === openCard.rank);
@@ -160,9 +156,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // ... игра продолжается
   };
-
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
-
+  const isLeader = status === STATUS_WON && !isEasy && pairsCount === 9;
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется
@@ -208,7 +203,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     // Функция очистки, которая будет вызвана при размонтировании компонента
     return () => clearInterval(timer);
   }, []);
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -249,6 +243,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
+            isLeader={isLeader}
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}

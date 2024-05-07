@@ -1,25 +1,45 @@
-import styles from "../LeaderBoardPage/LeaderBoard.module.css";
-import celebrationImageUrl from "./img/celebration.png";
-import React from "react";
-const imgSrc = celebrationImageUrl;
+import { Link } from "react-router-dom";
+import styles from "../LeaderBoardPage/LeaderBoardPage.module.css";
+import { Button } from "../../components/Button/Button";
+import { useEffect, useState } from "react";
+import { getToDos } from "../../api";
 
 export function LeaderBoardPage() {
+  const [leaders, setLeaders] = useState([]);
+  useEffect(() => {
+    getToDos()
+      .then(data => {
+        setLeaders(data.leaders);
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }, []);
   return (
     <div className={styles.container}>
-      <div className={styles.modal}>
-        <img src={imgSrc} alt="img" />
-        <h2 className={styles.title}>Вы попали на Лидерборд!</h2>
-        <input className={styles.input} type="text" name="" id="" placeholder="Пользователь" />
-        <button className={styles.sendTo}>Отправить данные</button>
-        <p className={styles.text}>Затраченное время:</p>
-        <div className={styles.time}>
-          1.25
-          {/* {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")} */}
+      <div className={styles.header}>
+        <p className={styles.text}>Лидерборд</p>
+        <Link to="/">
+          <Button>Начать игру</Button>
+        </Link>
+      </div>
+      <div className={styles.boardContent}>
+        <div className={styles.top}>
+          <p>Позиция</p>
+          <p className={styles.user}>Пользователь</p>
+          <p>Время</p>
         </div>
-        <button className={styles.sendTo}>Играть снова</button>
-        <a href="#" className={styles.leaderLink}>
-          Перейти к лидерборду
-        </a>
+        <div className={styles.leader}>
+          {leaders.map(leader => {
+            return (
+              <div className={styles.top} key={leader.id}>
+                <p>{leader.id}</p>
+                <p className={styles.user}>{leader.name}</p>
+                <p>{leader.time}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

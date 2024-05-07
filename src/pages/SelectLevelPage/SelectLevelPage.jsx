@@ -56,7 +56,13 @@ export function SelectLevelPage() {
           </div>
           Легкий режим (3 жизни)
         </label>
-        <Button onClick={startGame}>Играть</Button>
+        {level ? (
+          <Button onClick={startGame}>Играть</Button>
+        ) : (
+          <button className={styles.button} disabled>
+            Выберите уровень
+          </button>
+        )}
       </div>
     </div>
   );
