@@ -56,6 +56,7 @@ export function Card({ onClick, suit, rank, open }) {
       >
         <div className={styles.flipper}>
           <div className={styles.front}>
+            {" "}
             <ClosedCard onClick={onClick} />
           </div>
           <div className={styles.back}>

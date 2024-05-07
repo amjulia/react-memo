@@ -43,7 +43,7 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
-  const { isEasy, setIsEasy } = useContext(DifficultyLevelContext);
+  const { isEasy } = useContext(DifficultyLevelContext);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   // Текущий статус игры
@@ -59,7 +59,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     seconds: 0,
     minutes: 0,
   });
-
+  const isOpen = true;
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
     setStatus(status);
@@ -115,6 +115,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     }
     // Открытые карты на игровом поле
     const openCards = nextCards.filter(card => card.open);
+    if (openCards.length > 2) {
+      return;
+    }
     // Ищем открытые карты, у которых нет пары среди других открытых
     const openCardsWithoutPair = openCards.filter(card => {
       const sameCards = openCards.filter(openCard => card.suit === openCard.suit && card.rank === openCard.rank);
@@ -233,6 +236,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         {cards.map(card => (
           <Card
             key={card.id}
+            isOpen={isOpen}
             onClick={() => openCard(card)}
             open={status !== STATUS_IN_PROGRESS ? true : card.open}
             suit={card.suit}
@@ -251,13 +255,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         </div>
       ) : null}
-      <Link
-        className={styles.linkMain}
-        to="/"
-        onClick={() => {
-          setIsEasy(false);
-        }}
-      >
+      <Link className={styles.linkMain} to="/">
         Выбрать уровень
       </Link>
     </div>
