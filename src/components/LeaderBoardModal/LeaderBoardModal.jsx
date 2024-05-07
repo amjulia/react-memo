@@ -6,7 +6,7 @@ import { postToDo } from "../../api";
 const imgSrc = celebrationImageUrl;
 
 export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onClick }) {
-  const [nameLeader, setNameLeader] = useState(null);
+  const [nameLeader, setNameLeader] = useState("");
   const gameTime = gameDurationMinutes * 60 + gameDurationSeconds;
   const addToLeaders = () => {
     postToDo({ name: nameLeader, time: gameTime });
