@@ -3,8 +3,6 @@ import { Button } from "../Button/Button";
 import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
 import { LeaderBoardModal } from "../LeaderBoardModal/LeaderBoardModal";
-import { useEffect, useState } from "react";
-import { getToDos } from "../../api";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
   const title = isWon ? "Вы победили!" : "Вы проиграли!";
@@ -12,20 +10,10 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
   const imgAlt = isWon ? "celebration emodji" : "dead emodji";
-  const [newLeader, setNewLeader] = useState(false);
-  const gameTime = gameDurationMinutes * 60 + gameDurationSeconds;
-  useEffect(() => {
-    getToDos().then(data => {
-      const leaders = data.leaders.sort((a, b) => a.time - b.time);
-      if (leaders.length < 10 || gameTime < leaders[9].time) {
-        setNewLeader(true);
-      }
-    });
-  }, []);
 
   return (
     <>
-      {isLeader && newLeader ? (
+      {isLeader ? (
         <LeaderBoardModal
           gameDurationSeconds={gameDurationSeconds}
           gameDurationMinutes={gameDurationMinutes}

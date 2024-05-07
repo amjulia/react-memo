@@ -10,7 +10,7 @@ export function LeaderBoardPage() {
     getToDos()
       .then(data => {
         const leaders = data.leaders;
-        setLeaders(leaders.sort((a, b) => a.time - b.time));
+        setLeaders(leaders.sort((a, b) => a.time - b.time).slice(0, 10));
       })
       .catch(error => {
         console.log(error.message);
