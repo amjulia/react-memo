@@ -8,11 +8,9 @@ const imgSrc = celebrationImageUrl;
 export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onClick }) {
   const [nameLeader, setNameLeader] = useState(null);
   const gameTime = gameDurationMinutes * 60 + gameDurationSeconds;
-
   const addToLeaders = () => {
     postToDo({ name: nameLeader, time: gameTime });
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
@@ -30,6 +28,7 @@ export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onC
         <button className={styles.sendTo} onClick={addToLeaders}>
           Отправить данные
         </button>
+
         <p className={styles.text}>Затраченное время:</p>
         <div className={styles.time}>
           {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")}

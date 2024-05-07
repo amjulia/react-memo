@@ -115,9 +115,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     }
     // Открытые карты на игровом поле
     const openCards = nextCards.filter(card => card.open);
-    if (openCards.length > 2) {
-      return;
-    }
+    // if (openCards.length > 2) {
+    //   return;
+    // }
     // Ищем открытые карты, у которых нет пары среди других открытых
     const openCardsWithoutPair = openCards.filter(card => {
       const sameCards = openCards.filter(openCard => card.suit === openCard.suit && card.rank === openCard.rank);
@@ -160,7 +160,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     // ... игра продолжается
   };
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
-  const isLeader = status === STATUS_WON && !isEasy && pairsCount === 9;
+  const isLeader = status === STATUS_WON && !isEasy;
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется

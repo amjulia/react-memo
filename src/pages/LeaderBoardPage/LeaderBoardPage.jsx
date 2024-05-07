@@ -9,12 +9,22 @@ export function LeaderBoardPage() {
   useEffect(() => {
     getToDos()
       .then(data => {
-        setLeaders(data.leaders);
+        const leaders = data.leaders;
+        setLeaders(leaders.sort((a, b) => a.time - b.time));
       })
       .catch(error => {
         console.log(error.message);
       });
   }, []);
+  function secondsToTimeString(seconds) {
+    return (
+      Math.floor(Math.round(seconds) / 60)
+        .toString()
+        .padStart(2, "0") +
+      ":" +
+      (Math.round(seconds) % 60).toString().padStart(2, "0")
+    );
+  }
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -35,7 +45,7 @@ export function LeaderBoardPage() {
               <div className={styles.top} key={leader.id}>
                 <p>{leader.id}</p>
                 <p className={styles.user}>{leader.name}</p>
-                <p>{leader.time}</p>
+                <p>{secondsToTimeString(leader.time)}</p>
               </div>
             );
           })}
