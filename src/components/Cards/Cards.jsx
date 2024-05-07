@@ -160,7 +160,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     // ... игра продолжается
   };
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
-  const isLeader = status === STATUS_WON && !isEasy;
+  const isLeader = status === STATUS_WON && !isEasy && pairsCount === 9;
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется
