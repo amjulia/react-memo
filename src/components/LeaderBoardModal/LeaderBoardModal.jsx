@@ -3,6 +3,7 @@ import styles from "../LeaderBoardModal/LeaderBoard.module.css";
 import celebrationImageUrl from "./img/celebration.png";
 import React, { useState } from "react";
 import { postToDo } from "../../api";
+
 const imgSrc = celebrationImageUrl;
 
 export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onClick }) {

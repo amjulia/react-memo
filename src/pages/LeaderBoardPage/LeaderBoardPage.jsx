@@ -3,7 +3,8 @@ import styles from "../LeaderBoardPage/LeaderBoardPage.module.css";
 import { Button } from "../../components/Button/Button";
 import { useEffect, useState } from "react";
 import { getToDos } from "../../api";
-
+import ach1 from "./img/ach1.svg";
+import ach2 from "./img/ach2.svg";
 export function LeaderBoardPage() {
   const [leaders, setLeaders] = useState([]);
   useEffect(() => {
@@ -37,6 +38,7 @@ export function LeaderBoardPage() {
         <div className={styles.top}>
           <p>Позиция</p>
           <p className={styles.user}>Пользователь</p>
+          <p>Достижения</p>
           <p>Время</p>
         </div>
         <div className={styles.leader}>
@@ -45,6 +47,9 @@ export function LeaderBoardPage() {
               <div className={styles.top} key={leader.id}>
                 <p>{leader.id}</p>
                 <p className={styles.user}>{leader.name}</p>
+                <div>
+                  <img src={ach1} alt={ach1} /> <img src={ach2} alt={ach2} />
+                </div>
                 <p>{secondsToTimeString(leader.time)}</p>
               </div>
             );
