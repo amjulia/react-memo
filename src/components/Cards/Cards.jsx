@@ -160,7 +160,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     // ... игра продолжается
   };
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
-  const isLeader = status === STATUS_WON && !isEasy && pairsCount === 9;
+  const isLeader = status === STATUS_WON && !isEasy;
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется
@@ -229,7 +229,18 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+        {status === STATUS_IN_PROGRESS ? (
+          <>
+            {!isEasy && (
+              <div className={styles.imgBox}>
+                <button className={styles.vision}></button>
+                <button className={styles.alohomora}></button>
+              </div>
+            )}
+
+            <Button onClick={resetGame}>Начать заново</Button>
+          </>
+        ) : null}
         {isEasy && <div className={styles.lifesCount}>Попыток: {lifes}</div>}
       </div>
       <div className={styles.cards}>
