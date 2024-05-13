@@ -70,3 +70,50 @@
 
   margin-bottom: -12px;
 }
+.lifesCount {
+  font-family: StratosSkyeng;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: left;
+  color: #fff;
+}
+.linkMain {
+  color: #fff;
+  text-align: center;
+  font-family: StratosSkyeng;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+ 
+}
+.imgBox{
+  display: flex;
+  gap: 15px;
+}
+.vision {
+  height: 68px;
+  width: 68px;
+  background-image: url(./img/prozrenie.svg);
+  border-radius: 34px;
+  cursor: pointer;
+  opacity: 0.5;
+  border: none;
+}
+.vision:hover {
+  opacity: 1;
+}
+.alohomora{
+  height: 68px;
+  width: 68px;
+  background-image: url(./img/alohomora.svg);
+  border-radius: 34px;
+  cursor: pointer;
+  opacity: 0.5;
+  border: none;
+}
+.alohomora:hover {
+  opacity: 1;
+}
+
