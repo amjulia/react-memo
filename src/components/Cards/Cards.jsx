@@ -232,10 +232,18 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         {status === STATUS_IN_PROGRESS ? (
           <>
             {!isEasy && (
-              <div className={styles.imgBox}>
-                <button className={styles.vision}></button>
-                <button className={styles.alohomora}></button>
-              </div>
+              <>
+                <div className={styles.imgBox}>
+                  <button className={styles.vision}></button>
+                  <button className={styles.alohomora}></button>
+                </div>
+                <div className={styles.popup}>
+                  <span className={styles.popup_heading}>Прозрение</span>
+                  <span className={styles.popup_info}>
+                    На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+                  </span>
+                </div>
+              </>
             )}
 
             <Button onClick={resetGame}>Начать заново</Button>
