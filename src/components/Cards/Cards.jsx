@@ -61,7 +61,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     minutes: 0,
   });
   const [useVision, setUseVision] = useState(false);
-  // const [useAlohomora, setUseAlohomora] = useState(true);
+  const [useAlohomora, setUseAlohomora] = useState(false);
   const isOpen = true;
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
@@ -78,6 +78,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   }
   function resetGame() {
     setUseVision(false);
+    setUseAlohomora(false);
     setGameStartDate(null);
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
@@ -193,6 +194,18 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     }, 5000); // показываем карты на 5 секунд
   }
 
+  function handleAchievementAlohomoraClick() {
+    setUseAlohomora(true);
+    const notOpenedCards = cards.filter(card => !card.open);
+    const randomCard = notOpenedCards[Math.floor(Math.random() * notOpenedCards.length)];
+    const randomPair = notOpenedCards.filter(
+      sameCard => randomCard.suit === sameCard.suit && randomCard.rank === sameCard.rank,
+    );
+    randomPair[0].open = true;
+    randomPair[1].open = true;
+    setUseAlohomora(true);
+  }
+
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
   const isLeader = status === STATUS_WON;
   // Игровой цикл
@@ -292,7 +305,11 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 </div>
               </div>
               <div className={styles.alohomora_block}>
-                <button className={styles.alohomora}></button>
+                <button
+                  className={styles.alohomora}
+                  onClick={handleAchievementAlohomoraClick}
+                  disabled={useAlohomora}
+                ></button>
                 <div className={styles.popup}>
                   <span className={styles.popup_heading}>Алохомора</span>
                   <span className={styles.popup_info}>Открывается случайная пара карт.</span>
@@ -320,6 +337,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         <div className={styles.modalContainer}>
           <EndGameModal
             isLeader={isLeader}
+            useVision={useVision}
+            useAlohomora={useAlohomora}
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}

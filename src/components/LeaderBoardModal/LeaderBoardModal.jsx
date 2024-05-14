@@ -7,7 +7,7 @@ import { DifficultyLevelContext } from "../../context/DifficultyLevel";
 
 const imgSrc = celebrationImageUrl;
 
-export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onClick }) {
+export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onClick, useVision, useAlohomora }) {
   const [nameLeader, setNameLeader] = useState("");
   const gameTime = gameDurationMinutes * 60 + gameDurationSeconds;
   const { isEasy } = useContext(DifficultyLevelContext);
@@ -15,6 +15,11 @@ export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onC
     const achievements = [];
     if (!isEasy) {
       achievements.push(1);
+    }
+    if (!useVision && !useAlohomora) {
+      console.log(useAlohomora);
+      console.log(useVision);
+      achievements.push(2);
     }
     postToDo({ name: nameLeader, time: gameTime, achievements });
   };

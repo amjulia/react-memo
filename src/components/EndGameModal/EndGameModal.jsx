@@ -4,7 +4,15 @@ import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
 import { LeaderBoardModal } from "../LeaderBoardModal/LeaderBoardModal";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
+export function EndGameModal({
+  isWon,
+  gameDurationSeconds,
+  gameDurationMinutes,
+  onClick,
+  isLeader,
+  useVision,
+  useAlohomora,
+}) {
   const title = isWon ? "Вы победили!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
@@ -18,6 +26,8 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
           gameDurationSeconds={gameDurationSeconds}
           gameDurationMinutes={gameDurationMinutes}
           onClick={onClick}
+          useVision={useVision}
+          useAlohomora={useAlohomora}
         />
       ) : (
         <div className={styles.modal}>
