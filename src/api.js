@@ -1,18 +1,18 @@
 export async function getToDos() {
-  const response = await fetch("https://wedev-api.sky.pro/api/leaderboard");
+  const response = await fetch("https://wedev-api.sky.pro/api/v2/leaderboard");
   if (!response.ok) {
     throw new Error("Ошибка сервера");
   }
   const data = await response.json();
   return data;
 }
-export async function postToDo({ id, name, time }) {
-  const response = await fetch("https://wedev-api.sky.pro/api/leaderboard", {
+export async function postToDo({ name, time, achievements }) {
+  const response = await fetch("https://wedev-api.sky.pro/api/v2/leaderboard", {
     method: "POST",
     body: JSON.stringify({
-      id,
       name,
       time,
+      achievements,
     }),
   });
   if (!response.ok) {

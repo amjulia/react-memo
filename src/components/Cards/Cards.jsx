@@ -15,6 +15,7 @@ const STATUS_WON = "STATUS_WON";
 const STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 // Начало игры: игрок видит все карты в течении нескольких секунд
 const STATUS_PREVIEW = "STATUS_PREVIEW";
+const STATUS_PAUSE = "STATUS_PAUSE";
 
 function getTimerValue(startDate, endDate) {
   if (!startDate && !endDate) {
@@ -59,6 +60,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     seconds: 0,
     minutes: 0,
   });
+  const [useVision, setUseVision] = useState(false);
+  // const [useAlohomora, setUseAlohomora] = useState(true);
   const isOpen = true;
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
@@ -74,6 +77,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setLifes(3);
   }
   function resetGame() {
+    setUseVision(false);
     setGameStartDate(null);
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
@@ -159,8 +163,38 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // ... игра продолжается
   };
+
+  function handleAchievementVisionClick() {
+    const currentTime = timer;
+    setUseVision(true);
+    const userOpenCards = cards.filter(card => card.open);
+    const openCardsAll = cards.map(card => ({ ...card, open: true }));
+    setCards(openCardsAll);
+    setStatus(STATUS_PAUSE);
+
+    setTimeout(() => {
+      const closedUserCards = cards.map(card => {
+        if (userOpenCards.some(openCard => openCard.id === card.id)) {
+          // карты, открытые игроком, остаются открытыми
+          return {
+            ...card,
+            open: true,
+          };
+        }
+        // остальные карты закрываются
+        return {
+          ...card,
+          open: false,
+        };
+      });
+      setCards(closedUserCards);
+      setTimer(currentTime);
+      setStatus(STATUS_IN_PROGRESS);
+    }, 5000); // показываем карты на 5 секунд
+  }
+
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
-  const isLeader = status === STATUS_WON && !isEasy;
+  const isLeader = status === STATUS_WON;
   // Игровой цикл
   useEffect(() => {
     // В статусах кроме превью доп логики не требуется
@@ -189,14 +223,30 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   // Обновляем значение таймера в интервале
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTimer(getTimerValue(gameStartDate, gameEndDate));
-    }, 300);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [gameStartDate, gameEndDate]);
+    if (status !== STATUS_PAUSE) {
+      if (status === STATUS_LOST) return;
+      if (status === STATUS_WON) return;
+      const intervalId = setInterval(() => {
+        setTimer(
+          timer.seconds === 59
+            ? t => ({
+                seconds: t.seconds - 59,
+                minutes: t.minutes + 1,
+              })
+            : t => ({
+                ...t,
+                seconds: t.seconds + 1,
+              }),
+        );
+      }, 1000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [gameStartDate, gameEndDate, setTimer, status, timer]);
+
   const [seconds, setSeconds] = useState(previewSeconds);
+
   useEffect(() => {
     // Установка таймера
     const timer = setInterval(() => {
@@ -229,27 +279,30 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        {status === STATUS_IN_PROGRESS ? (
+        {status === STATUS_IN_PROGRESS || status === STATUS_PAUSE ? (
           <>
-            {!isEasy && (
-              <>
-                <div className={styles.imgBox}>
-                  <button className={styles.vision}></button>
-                  <button className={styles.alohomora}></button>
-                </div>
+            <div className={styles.imgBox}>
+              <div className={styles.vision_block}>
+                <button className={styles.vision} onClick={handleAchievementVisionClick} disabled={useVision}></button>
                 <div className={styles.popup}>
                   <span className={styles.popup_heading}>Прозрение</span>
                   <span className={styles.popup_info}>
                     На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
                   </span>
                 </div>
-              </>
-            )}
-
+              </div>
+              <div className={styles.alohomora_block}>
+                <button className={styles.alohomora}></button>
+                <div className={styles.popup}>
+                  <span className={styles.popup_heading}>Алохомора</span>
+                  <span className={styles.popup_info}>Открывается случайная пара карт.</span>
+                </div>
+              </div>
+            </div>
+            {isEasy && <div className={styles.lifesCount}>Попыток: {lifes}</div>}
             <Button onClick={resetGame}>Начать заново</Button>
           </>
         ) : null}
-        {isEasy && <div className={styles.lifesCount}>Попыток: {lifes}</div>}
       </div>
       <div className={styles.cards}>
         {cards.map(card => (

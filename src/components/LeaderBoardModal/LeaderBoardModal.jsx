@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
 import styles from "../LeaderBoardModal/LeaderBoard.module.css";
 import celebrationImageUrl from "./img/celebration.png";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { postToDo } from "../../api";
+import { DifficultyLevelContext } from "../../context/DifficultyLevel";
 
 const imgSrc = celebrationImageUrl;
 
 export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onClick }) {
   const [nameLeader, setNameLeader] = useState("");
   const gameTime = gameDurationMinutes * 60 + gameDurationSeconds;
+  const { isEasy } = useContext(DifficultyLevelContext);
   const addToLeaders = () => {
-    postToDo({ name: nameLeader, time: gameTime });
+    const achievements = [];
+    if (!isEasy) {
+      achievements.push(1);
+    }
+    postToDo({ name: nameLeader, time: gameTime, achievements });
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
