@@ -5,14 +5,20 @@ import { useEffect, useState } from "react";
 import { getToDos } from "../../api";
 import hardNo from "./img/hardNo.svg";
 import achNo from "./img/achNo.svg";
-// import hardYes from "./img/hardYes.svg";
+import achYes from "./img/achYes.svg";
+import hardYes from "./img/hardYes.svg";
 export function LeaderBoardPage() {
   const [leaders, setLeaders] = useState([]);
   useEffect(() => {
     getToDos()
       .then(data => {
-        const leaders = data.leaders;
-        setLeaders(leaders.sort((a, b) => a.time - b.time).slice(0, 10));
+        const newLeaders = data.leaders.map(leader => {
+          const hasSuperPoverAchievement = leader.achievements.includes(2);
+          const hasHardModeAchievement = leader.achievements.includes(1);
+          return { ...leader, hasSuperPoverAchievement, hasHardModeAchievement };
+        });
+        newLeaders.sort((a, b) => a.time - b.time).slice(0, 10);
+        setLeaders(newLeaders.sort((a, b) => a.time - b.time).slice(0, 10));
       })
       .catch(error => {
         console.log(error.message);
@@ -43,13 +49,22 @@ export function LeaderBoardPage() {
           <p>Время</p>
         </div>
         <div className={styles.leader}>
-          {leaders.map(leader => {
+          {leaders.map((leader, index) => {
             return (
               <div className={styles.top} key={leader.id}>
-                <p>{leader.id}</p>
+                <p>#{index + 1}</p>
                 <p className={styles.user}>{leader.name}</p>
                 <div>
-                  <img src={hardNo} alt={hardNo} /> <img src={achNo} alt={achNo} />
+                  {leader.hasHardModeAchievement ? (
+                    <img src={hardYes} alt={hardYes} />
+                  ) : (
+                    <img src={hardNo} alt={hardNo} />
+                  )}
+                  {leader.hasSuperPoverAchievement ? (
+                    <img src={achYes} alt={achYes} />
+                  ) : (
+                    <img src={achNo} alt={achNo} />
+                  )}
                 </div>
                 <p>{secondsToTimeString(leader.time)}</p>
               </div>
