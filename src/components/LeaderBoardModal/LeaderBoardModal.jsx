@@ -17,8 +17,6 @@ export function LeaderBoardModal({ gameDurationMinutes, gameDurationSeconds, onC
       achievements.push(1);
     }
     if (!useVision && !useAlohomora) {
-      console.log(useAlohomora);
-      console.log(useVision);
       achievements.push(2);
     }
     postToDo({ name: nameLeader, time: gameTime, achievements });
