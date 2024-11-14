@@ -1,21 +1,27 @@
 {
   "files": {
-    "main.css": "/react-memo/static/css/main.38496486.css",
-    "main.js": "/react-memo/static/js/main.2bd3b906.js",
+    "main.css": "/react-memo/static/css/main.9d0190d5.css",
+    "main.js": "/react-memo/static/js/main.6cde93b4.js",
     "static/media/StratosSkyeng.woff2": "/react-memo/static/media/StratosSkyeng.ce93393e831d32412096.woff2",
     "static/media/celebration.png": "/react-memo/static/media/celebration.2577e3c3835ac1f32429.png",
     "static/media/dead.png": "/react-memo/static/media/dead.bfb3f81b5110f1b62252.png",
-    "static/media/сard-shirt.svg": "/react-memo/static/media/сard-shirt.4d53d3f942979a0dcb35c53a2889e78b.svg",
-    "static/media/cross.svg": "/react-memo/static/media/cross.7f91ce47ecbf6ae38498fefd7b1000b6.svg",
+    "static/media/prozrenie.svg": "/react-memo/static/media/prozrenie.141f49a5d0ff6164bdda.svg",
+    "static/media/achNo.svg": "/react-memo/static/media/achNo.86c8816a5912f29fb487c4cdb23f87e2.svg",
+    "static/media/hardNo.svg": "/react-memo/static/media/hardNo.b874d825b20069c3f036ac688d360df9.svg",
+    "static/media/hardYes.svg": "/react-memo/static/media/hardYes.c96ad1dcd711a5b4686c62742c691342.svg",
+    "static/media/achYes.svg": "/react-memo/static/media/achYes.1b0dcb431273fedc9a543201dba710b6.svg",
+    "static/media/alohomora.svg": "/react-memo/static/media/alohomora.3ced6796fa2afe58d343.svg",
+    "static/media/сard-shirt.svg": "/react-memo/static/media/сard-shirt.ee1c021f7ee4ddc65293b8afcc81859d.svg",
+    "static/media/cross.svg": "/react-memo/static/media/cross.a67a9b79b3c4428c4927895e6c820391.svg",
     "index.html": "/react-memo/index.html",
-    "static/media/hearts.svg": "/react-memo/static/media/hearts.be33f4a44d6f0430c5e08883a0ad5e5b.svg",
-    "static/media/spades.svg": "/react-memo/static/media/spades.93f2e7c8261b046c228b40965b4493ec.svg",
-    "static/media/diamonds.svg": "/react-memo/static/media/diamonds.6d6202122f9a41366f7da20cfe4cf5b7.svg",
-    "main.38496486.css.map": "/react-memo/static/css/main.38496486.css.map",
-    "main.2bd3b906.js.map": "/react-memo/static/js/main.2bd3b906.js.map"
+    "static/media/hearts.svg": "/react-memo/static/media/hearts.61a332d669720824455d75936096b657.svg",
+    "static/media/spades.svg": "/react-memo/static/media/spades.d5657ff5be305701be575ad4403987f4.svg",
+    "static/media/diamonds.svg": "/react-memo/static/media/diamonds.60153c09fb0fa0f9b5bab2a62d795342.svg",
+    "main.9d0190d5.css.map": "/react-memo/static/css/main.9d0190d5.css.map",
+    "main.6cde93b4.js.map": "/react-memo/static/js/main.6cde93b4.js.map"
   },
   "entrypoints": [
-    "static/css/main.38496486.css",
-    "static/js/main.2bd3b906.js"
+    "static/css/main.9d0190d5.css",
+    "static/js/main.6cde93b4.js"
   ]
 }
